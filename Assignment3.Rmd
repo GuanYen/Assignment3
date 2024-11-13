@@ -1,0 +1,314 @@
+---
+title: "Assignment3"
+author: "Jason Chen"
+date: "2024-11-04"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+# Completed {12/16}
+
+# 1
+
+## a
+$$
+  f(y) = \frac{e^{-y/\beta}}{\beta} \newline
+  \int^t_0 \frac{e^{-y/\beta}}{\beta} dy \rightarrow \int^t_0 e^{-y/\beta} \newline
+  \rightarrow -e^{-y/\beta}]^t_0 \rightarrow -e^{-y/t} + e^{-y/0} \newline
+  \rightarrow -e^{-y/t} + 1 \rightarrow 1 -e^{-y/t} \newline
+  P(Y \geq t) = 1 - (1 -e^{-y/t}) = -e^{-y/t} = -e^{-120/95} \newline
+  = 0.2828
+$$
+
+## b
+```{r}
+  phish <- read.csv("PHISHING.csv")
+  head(phish)
+  v<-phish$INTTIME
+  mean(v)
+```
+
+The mean of the PHISHING values is 95.52 which is close to $\beta = 95$, so it does follow the exponential distribution.
+
+# 2
+
+## a
+$$
+  \mu = \alpha \beta = 3 * 0.07 = 0.21\newline
+  \sigma^2 = \alpha \beta^2 = 3 * 0.07^2 = 0.0147
+$$
+
+## b
+```{r}
+  a = 0.21
+  o = sqrt(0.0147)
+  a + (3*o)
+```
+
+The upper limit of the distribution is 0.5737 so a value of 0.60 would be considered unusual. This information can show that the gamma model may not have captured the full variability of flood levels, which is unlikely since they began in 1890, or that flood levels are increasing.
+
+# 3
+
+## a
+$$
+  \mu_A = \alpha\beta = 2*2 = 4 \newline
+  \mu_B = \alpha\beta = 1*4 =4
+$$
+
+## b
+$$
+  \sigma^2_A = \alpha\beta^2 = 2*2^2 = 8 \newline
+  \sigma^2_B = \alpha\beta^2 = 1*4^2 = 16
+$$
+
+## c
+$$
+  f(y) = \frac{y^{\alpha-1}e^{-y/\beta}}{\beta^\alpha \Gamma(\alpha)} \newline
+  \Gamma{\alpha}_A = \int^t_0 y^{\alpha-1} e^{-y} dy \rightarrow \int^t_0 y^{2-1} e^{-y}
+  \rightarrow \int ye^{-y} dy \rightarrow ye^{-y} - e^{-y}]^{1}_0
+  \rightarrow e^{-1}-e^{-1} + e^0 = 1\newline
+  \Gamma{\alpha}_B = \int^t_0 y^{\alpha-1} e^{-y} dy \rightarrow \int^t_0 y^{1-1} e^{-y}
+  \rightarrow -e^{-y}]^{1}_0 \rightarrow -e^{-1} + e^0 = 1.3679 \newline
+  f(y)_A = \frac{1^{2-1}e^{-1/2}}{2^2 * 1} = \frac{e^{-1/2}}{4} = 0.1516 \newline
+  f(y)_B = \frac{1^{1-1}e^{-1/4}}{4^1 * 1.3679} = \frac{e^{-1/4}}{5.4716} = 0.1423
+$$
+
+Tear gas A has a higher probability of generating a human reaction in less than 1 minute.
+
+# 4
+
+## a
+$$
+  f(y) = \int \frac{\alpha}{\beta}y^{\alpha-1}e^{-y^\alpha/\beta}
+  = \int \frac{2}{4}y^{2-1}e^{-y^2/4} \rightarrow \frac{1}{2} \int ye^{-y^2/4}
+  \rightarrow \frac{1}{2} ye^{-y^2/4} - e^{-y^2/4}]^2_0 \newline
+  \rightarrow \frac{1}{2}(2e^{-4/4}-e^{-4/4} + e^0) = \frac{1}{2}(e^{-4/4} + e^0)
+  = \frac{1}{2} (1.3679) = 0.68395 
+$$
+
+About 0.68395 of washing machines will be repaired under the guarantee.
+
+## b
+$$
+  \mu = 4^{1/\alpha}\Gamma(\frac{\alpha+1}{\alpha}) = 4^{1/2}\Gamma(\frac{3}{2}) = 2*0.88623 = 1.77246 \newline
+  \sigma^2 = \beta^{2/\alpha}[\Gamma(\frac{\alpha+2}{\alpha}) - \Gamma(\frac{\alpha+1}{\alpha})] = 4[\Gamma(2) - \Gamma(\frac{3}{2})] = 4[1-0.88623] = 0.45508 \newline
+  \sigma = 0.6746
+$$
+
+## c
+$$
+  \mu + 2\sigma = 3.12 \newline
+  \mu - 2\sigma = 0.42326 \newline
+  \frac{1}{2} (ye^{-y^2/4} - e^{-y^2/4})]^{3.12}_{0.42326} \newline
+  ->\frac{1}{2} (3.12e^{-3.12^2/4} - e^{-3.12^2/4}) - (0.42326e^{-0.42326^2/4} - 0.42326^{-0.42326^2/4}) = \frac{1}{2} 0.8205
+  \newline P(\mu - 2\sigma \leq Y \leq \mu + 2\sigma)= 0.41025
+$$
+
+## d
+$$
+  \frac{1}{2} (ye^{-y^2/4} - e^{-y^2/4})]^6_0 = \frac{1}{2} (6e^{-6^2/4} - e^{-6^2/4}) + 1 = \frac{1}{2} (1.0006) = 0.5003 \newline
+  P(Y \geq 6) = 1 - 0.5003 = 0.4997
+$$
+
+# 5
+
+## a
+$$
+  \mu = \frac{\alpha}{\alpha+\beta} = \frac{2}{11} = 0.18182 \newline
+  \sigma^2 = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)} 
+  = \frac{18}{1452} = 0.0124
+$$
+
+## b
+```{r}
+  1 - pbeta(0.4,2,9)
+```
+
+## c
+```{r}
+  pbeta(0.1,2,9)
+```
+
+# 6
+
+## a
+$$
+  \alpha = 2 \newline
+  \beta = 16
+$$
+
+## b
+$$
+  \mu = 4\Gamma(3/2)\newline = 4*0.88623 = 3.545
+  \sigma^2 = 16[\Gamma(2)-\Gamma^2(3/2)] = 16[1-0.7854] = 3.434
+$$
+
+## c
+$$
+  1-e^{-\frac{6^{2}}{16}} \rightarrow 1 - 0.1054 = 0.8946
+$$
+
+# 7
+
+## a
+$$
+  P(x,y) = \frac{1}{36}
+$$
+
+## b
+$$
+  p_1(x) = 6/36 = 1/6\newline
+  p_2(y) = 6/36 = 1/6
+$$
+
+## c
+$$
+ p_1(x|y) = p(x,y)/p_2(y) = (1/36)/(1/6) = 6/36 = 1/6 \newline
+ p_2(y|x) = p(x,y)/p_1(x) = (1/36)/(1/6) = 6/36 = 1/6
+$$
+
+## d
+The probability distributions stay the same for each condition so the outcome of one dice does not influence the outcome of the other dice. Therefore, the dice are independent variables.
+
+# 8
+
+## a
+$$
+  P(1,1)= 1/7 \newline
+  P(1,2)= 0 \newline
+  P(1,3)= 0 \newline
+  P(2,1)= 2/7 \newline
+  P(2,2)= 0 \newline
+  P(2,3)= 0 \newline
+  P(3,1)= 1/7 \newline
+  P(3,2)= 2/7 \newline
+  P(3,3)= 1/7 \newline
+$$
+
+## b
+$$
+  P_1(1)=1/7+0+0=1/7 \newline
+  P_1(2)=2/7+0+0=2/7 \newline
+  P_1(3)=1/7+2/7+1/7=4/7
+$$
+
+## c
+$$
+  P_2(1)= 1/7+2/7+1/7 = 4/7 \newline
+  P_2(2)= 0+0+2/7 = 2/7 \newline
+  P_2(3)= 0+0+1/7 = 1/7 \newline
+$$
+
+# d
+$$
+  p_2(y|x) \newline
+  P_2(1|1) = (1,1)/p_1(1) = (1/7) / (1/7) = 1 \newline
+  P_2(2|1) = (1,2)/p_1(1) = 0 / (1/7) = 0 \newline
+  P_2(3|1) = (1,3)/p_1(1) = 0 / (1/7) = 0 \newline
+  P_2(1|2) = (2,1)/p_1(2) = (2/7) / (2/7) = 1 \newline
+  P_2(2|2) = (2,2)/p_1(2) = 0 / (2/7) = 0 \newline
+  P_2(3|2) = (2,3)/p_1(2) = 0 / (2/7) = 0 \newline
+  P_2(1|3) = (3,1)/p_1(3) = (1/7) / (4/7) = 1/4 \newline
+  P_2(2|3) = (3,2)/p_1(3) = (2/7) / (4/7) = 2/4 \newline
+  P_2(3|3) = (3,3)/p_1(3) = (1/7) / (4/7) = 1/4
+$$
+
+# 9
+
+## a
+$$
+  f(y) = \int \frac{e^{-y/10}}{10y} dx = \frac{e^{-y/10}}{10y}
+$$
+
+This function is the exponential probability distribution function with $\beta=10$.
+
+## b
+$E(Y) = \mu = \beta = 10$
+
+# 10
+
+## a
+$$
+  \int^{infinity}_0 \int^x_0 ce^{-x^2}dydx=1 \newline
+  \rightarrow \int^{infinity}_0 ce^{-x^2} (\int^x_0 1dy) dx = c\int^{infinity}_0 xe^{-x^2}dx
+  \newline \rightarrow c\int^{infinity}_0 e^{-u}*\frac{1}{2}du \rightarrow
+  c\frac{1}{2}\int^{infinity}_0 e^{-u}du = c\frac{1}{2} * 1 = c*\frac{1}{2} \newline
+  c*\frac{1}{2} = 1\newline
+  c = 2
+$$
+
+## b
+$$
+  \int \int 2e^{-x^2} dy dx \rightarrow \int 2xe^{-x^2} dx \rightarrow \int e^{-u} du \rightarrow -e^{-u} \rightarrow 0 - (-1) = 1
+$$
+
+## c
+$$
+  \frac{2e^{-x^2}}{2xe^{-x^2}} = \frac{1}{x}
+$$
+
+# 11
+$$
+  E(X,Y)= (-1)(-1)(1/12)+(0)(-1)(2/12)+(-1)(1)(1/12)+(0)(-1)(2/12)+(0)(0)(0)\newline
+  + (0)(1)(2/12)+(1)(-1)(1/12)+(1)(0)(2/12)+(1)(1)(1/12) \newline
+  = (1/12) + 0 + -(1/12) + 0 + 0 + 0 + -(1/12) + 0 + (1/12) \newline 
+  = 0 \newline
+  E(X) = -1(4/12)+0(4/12)+1(4/12) = 0 \newline
+  E(Y) = -1(4/12)+0(4/12)+1(4/12) = 0 \newline
+  Cov(X,Y) = E(X,Y) - E(X)E(Y) = 0 - 0 = 0 \newline
+  p(-1,-1) = p_1(-1)p_2(y-1) \rightarrow (1/12) = (4/12)(4/12) \rightarrow (1/12) = (16/144)
+  \newline \rightarrow (1/12) = (1/9) \newline
+  (1/12) \neq (1/9)
+$$
+
+# 12
+
+## a
+$E(\overline{Y}) = \frac{a+b}{2} = \frac{1+3}{2} = 2$
+
+## b
+$Var(Y) = \frac{(b-a)^2}{12} = \frac{(2)^2}{12} = \frac{4}{12} = \frac{1}{3}$
+
+$Var(\overline{Y}) = \frac{Var(Y)}{n} = \frac{\frac{1}{3}}{60} = \frac{1}{180} = 0.0056$
+
+## c
+Since $n$ is sufficiently large and we approximated the sample mean with a normal density function, the shape of the sampling distribution will be approximately normal.
+
+## d
+```{r}
+  pnorm(2.5, mean=2,sd=sqrt(1/180))-pnorm(1.5, mean=2,sd=sqrt(1/180))
+```
+
+## e
+```{r}
+  1-pnorm(2.2, mean=2,sd=sqrt(1/180))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
